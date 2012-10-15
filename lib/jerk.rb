@@ -21,7 +21,9 @@ module Jerk
     include Base
 
     def call(env)
-      path, query_string = env['PATH_INFO'].split('?')
+      path = env['PATH_INFO']
+      query_string = env['QUERY_STRING'].empty? ? nil : env['QUERY_STRING']
+
       if path[/[A-Z]/]
         [301, { Location: [path.downcase, query_string].compact.join('?') }, self]
       else
