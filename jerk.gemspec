@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["corey.atx@gmail.com"]
   gem.description   = %q{Jerk is insensitive, particularly about URL casing.}
   gem.summary       = %q{Jerk is middleware that prevents any uppercase URLs from making it through in the path of a URL.}
-  gem.homepage      = ""
+  gem.homepage      = "http://github.com/jonesdilworth/jerk"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
