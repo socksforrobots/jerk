@@ -1,6 +1,6 @@
 require "jerk/version"
 
-require 'railtie' if defined?(Rails)
+require 'jerk/railtie' if defined?(Rails)
 
 module Jerk
   module Base

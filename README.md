@@ -12,7 +12,10 @@ a lowercase-normalized version of the requested URL. Query strings are left alon
     # Shell
     $ bundle
 
-And you're done.
+On Rails? You're done. Not on Rails? Just add the middleware wherever you like:
+
+    use Jerk::Redirect
+    # or Jerk::Ignore if you don't want redirects
 
 ## Contributing
 
