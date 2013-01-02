@@ -13,6 +13,19 @@ module Jerk
     end
 
     def each(&block); end
+
+    def url_without_query_string(env)
+      req = Rack::Request.new(env)
+      req.base_url + req.script_name + req.path_info
+    end
+
+    def downcased_url(env)
+      if env['QUERY_STRING'].empty?
+        url_without_query_string(env).downcase
+      else
+        url_without_query_string(env).downcase + "?#{env['QUERY_STRING']}"
+      end
+    end
   end
 
   ### DEFAULT
@@ -21,11 +34,8 @@ module Jerk
     include Base
 
     def call(env)
-      path = env['PATH_INFO']
-      query_string = env['QUERY_STRING'].empty? ? nil : env['QUERY_STRING']
-
-      if path[/[A-Z]/]
-        [301, { Location: [path.downcase, query_string].compact.join('?') }, self]
+      if url_without_query_string(env)[/[A-Z]/]
+        [301, { Location: downcased_url(env) }, self]
       else
         super
       end
@@ -37,7 +47,9 @@ module Jerk
     include Base
 
     def call(env)
-      env['PATH_INFO'].downcase!
+      env['HOST'].to_s.downcase!
+      env['SCRIPT_NAME'].to_s.downcase!
+      env['PATH_INFO'].to_s.downcase!
       super
     end
   end
