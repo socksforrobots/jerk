@@ -35,7 +35,7 @@ module Jerk
 
     def call(env)
       if url_without_query_string(env)[/[A-Z]/]
-        [301, { Location: downcased_url(env) }, self]
+        [301, { 'Location' => downcased_url(env), 'Content-Type' => 'text/plain' }, self]
       else
         super
       end
